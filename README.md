@@ -60,6 +60,16 @@ alias test='echo "test"'
 export PATH=$PATH:/test/folder
 ```
 
+Your command could also resemble this:
+
+```bash
+bashpal -a test -c "cd $PWD && ./test" -f test.txt
+```
+
 ### Why?
 
 I use this code in some of my projects. It's mostly for my own use, but you can give it a try if you're okay with the risks. Also, I made this package to learn how to create, build, and publish Debian packages.
+
+## License
+
+This project is dual-licensed under MIT and GPL-2+. Please adhere to the MIT license terms. Debian encounters complications with the MIT License when building a package.
