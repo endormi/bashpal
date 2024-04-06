@@ -1,0 +1,49 @@
+.Dd April 6, 2024
+.Dt BASHPAL 1
+.Os
+.Sh NAME
+.Nm bashpal
+.Nd Alias and PATH utility
+.Sh DESCRIPTION
+This tool adds aliases and PATHs to configuration files. Use at your own risk!
+.Sh SYNOPSIS
+.Bl -tag -width Ds
+.It Xo
+.Nm bashpal
+.Op Fl a Ar alias
+.Op Fl c Ar command
+.Op Fl f Ar filename
+.Op Fl p Ar path
+.Xc
+.Pp
+The
+.Fl a
+flag specifies the alias name.
+.Pp
+The
+.Fl c
+flag specifies the command associated with the alias.
+.Pp
+The
+.Fl f
+flag specifies a file containing aliases to add. (Default is ~/.bash_aliases)
+.Pp
+The
+.Fl p
+flag specifies a path to add to the bash configuration.
+.
+.El
+.Sh OPTIONS
+The following options are available:
+.Bl -tag -width "-a alias"
+.It Fl a Ar alias
+alias name to add.
+.It Fl c Ar command
+command to add for alias.
+.It Fl f Ar filename
+file to create and to add aliases and paths.
+.It Fl p Ar path
+path to add to the bash configuration.
+.El
+.Sh AUTHOR
+Endormi

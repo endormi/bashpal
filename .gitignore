@@ -1,0 +1,6 @@
+# Not all
+bashpal-1.0/.pc/*
+*/debian/.debhelper
+*/debian/patches
+*.log
+*.xz

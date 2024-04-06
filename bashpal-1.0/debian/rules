@@ -1,0 +1,8 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+
+# For manpage
+override_dh_auto_install:
+	dh_auto_install
+	install -D -m 644 debian/bashpal.1 $(CURDIR)/debian/bashpal/usr/share/man/man1/bashpal.1

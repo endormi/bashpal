@@ -1,0 +1,12 @@
+Source: bashpal
+Section: utils
+Priority: optional
+Maintainer: <Withdrew>
+Build-Depends: debhelper-compat (= 12)
+Standards-Version: 4.4.1
+
+Package: bashpal
+Architecture: all
+Depends: ${misc:Depends}, grep (>= 3.2)
+Description: Package for adding aliases and PATHs.
+ Very very cool.

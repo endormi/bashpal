@@ -1,0 +1,89 @@
+#!/bin/bash
+
+check_alias() {
+  if alias $alias_name &>/dev/null; then
+    echo "Alias $alias_name already exists!"
+    exit
+  fi
+}
+
+check_path() {
+  local path=$1
+  local alias_name=$2
+  if grep -Fxq "export PATH=\$PATH:$path" $alias_name || alias $PATH &>/dev/null; then
+    echo "Directory or alias already exists in PATH!"
+    exit
+  fi
+}
+
+prompt_for_new_shell_session() {
+  echo -e "\nChanges have been made to ${bash_aliases_file}."
+  echo -e "It's recommended to start a new shell session to get the changes immediately.\n"
+  read -p "Do you want to start a new shell session? (y/N) " response
+
+  response="$(echo "$response" | tr 'A-Z' 'a-z')"
+
+  if [[ "$response" == "y" || "$response" == "yes" ]]; then
+    exec $BASH
+  else
+    exit
+  fi
+}
+
+a_flag=0
+c_flag=0
+p_flag=0
+
+bash_aliases_file=~/.bash_aliases
+
+usage() {
+  echo "script usage: $(basename "$0") [-a alias] [-c command] [-f filename] [-p path]" >&2
+  echo "Command example: -c 'echo "'"hi"'"'"
+  exit 1
+}
+
+while getopts 'a:c:f:p:' OPTION; do
+  case "$OPTION" in
+    a)
+      a_flag=1
+      alias_name="$OPTARG"
+      ;;
+    c)
+      c_flag=1
+      cmd="$OPTARG"
+      ;;
+    f)
+      f="$OPTARG"
+      bash_aliases_file=$f
+      ;;
+    p)
+      p_flag=1
+      path="$OPTARG"
+      ;;
+    ?)
+      usage
+      ;;
+  esac
+done
+
+if [ $OPTIND -eq 1 ]; then
+  usage
+fi
+
+[ ! -f $bash_aliases_file ] && touch $bash_aliases_file
+
+. $bash_aliases_file
+
+if [ "$a_flag" -eq 1 ] && [ "$c_flag" -eq 1 ]; then
+  check_alias $alias_name
+  echo "alias $alias_name='$cmd'" >> $bash_aliases_file
+  echo -e "Added ${alias_name} to ${bash_aliases_file}"
+fi
+
+if [ "$p_flag" -eq 1 ]; then
+  check_path $path $bash_aliases_file
+  echo "export PATH=\$PATH:$path" >> $bash_aliases_file
+  echo "Added ${path} PATH to ${bash_aliases_file}"
+fi
+
+prompt_for_new_shell_session
